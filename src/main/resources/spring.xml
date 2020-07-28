@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan
+		base-package="com.xworkz.temple" />
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		id="internalResourceViewResolver">
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".jsp" />
+
+	</bean>
+
+	<bean
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"
+		id="propertySourcesPlaceholderConfigurer">
+		<property name="location"
+			value="WEB-INF/classes/spring.properties" />
+	</bean>
+
+	<bean
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+		id="localSessionFactoryBean">
+		<property name="configLocations"
+			value="WEB-INF/classes/hibernate.cfg.xml" />
+		<property name="dataSource" ref="driverManagerDataSource" />
+	</bean>
+
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="driverManagerDataSource">
+		<property name="driverClassName"
+			value="${dataSource.driverClassName}" />
+		<property name="username" value="${dataSource.username}" />
+		<property name="password" value="${dataSource.password}" />
+		<property name="url" value="${dataSource.url}" />
+	</bean>
+
+	<!-- <bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
+		id="javaMailSenderImpl">
+		<property name="host" value="${dataSource.host}"></property>
+		<property name="port" value="${dataSource.port}"></property>
+		<property name="username" value="${dataSource.username}"></property>
+		<property name="password" value="${dataSource.password}"></property>
+		<property name="javaMailProperties">
+
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+
+			</props>
+		</property>
+	</bean> -->
+
+</beans>
