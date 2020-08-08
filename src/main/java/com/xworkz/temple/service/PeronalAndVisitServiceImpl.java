@@ -104,17 +104,7 @@ public class PeronalAndVisitServiceImpl implements PersonalAndVisitService {
 						logger.info("Email and mobile Number Validated Succesfully");
 						logger.info("Validated the Personal Dto And Visiting DTO");
 
-						String emailBody = new String("Thank You for Temple Registration and Check the Details Below");
-						String emailSubjectName = new String("Hi," + "\n"
-								+ "Successfully Registered for the Temple Visitation" + "\n" + "Name of the Visiter : "
-								+ personalDTO.getName() + "\n" + "EmailId of the Visiter : " + personalDTO.getEmail()
-								+ "\n" + "Number of the Visiter : " + visitDTO.getNoOfPersonList() + "\n"
-								+ "Phone Number of the Visiter : " + personalDTO.getMobile() + "\n"
-								+ "Pooja Type of the Visiter : " + visitDTO.getPoojaTypeList() + "\n"
-								+ "Special Entry of the Visiter : " + visitDTO.getSpecialEntryList() + "\n"
-								+ "Date of Visiting : " + visitDTO.getDate()
-
-						);
+						
 
 						visitEntity.setPersonalEntity(personalEntity);
 						personalEntity.setVisitEntity(visitEntity);
@@ -126,8 +116,8 @@ public class PeronalAndVisitServiceImpl implements PersonalAndVisitService {
 						logger.info("Creating method DAO");
 						dao.create(personalEntity);
 
-						MailDTO mailDto = new MailDTO(personalDTO.getEmail(), emailSubjectName, emailBody);
-
+						//ilDTO mailDto = new MailDTO(personalDTO.getEmail(), emailSubjectName, emailBody);
+						MailDTO mailDto=TO(email,visitDTO);
 						mailService.sendMail(mailDto);
 						logger.info("mail sent successfully");
 					} else {
@@ -159,20 +149,8 @@ public class PeronalAndVisitServiceImpl implements PersonalAndVisitService {
 				logger.info("visitDTO "+visitDTO);
 //			logger.info("Creating method DAO");
 
-				String emailBody = new String("Thank You for Temple Registration and Check the Details Below");
-				String emailSubjectName = new String("Hi," + "\n"
-						+ "Successfully Registered for the Temple Visitation" + "\n" 
-						+ "\n" + "Number of the Visiter : " + visitDTO.getNoOfPersonList() + "\n"
-						+ "Id card of the Visiter : " + visitDTO.getIdList() + "\n"
-						+ "Id Number of the Visiter : " + visitDTO.getIdNo() + "\n"
-						+ "Pooja Type of the Visiter : " + visitDTO.getPoojaTypeList() + "\n"
-						+ "Special Entry of the Visiter : " + visitDTO.getSpecialEntryList() + "\n"
-						+ "Date of Visiting : " + visitDTO.getDate()+"\n"
-						+ "Regards," + "\n"+"Nikhil."  
-
-				);
-				MailDTO mailDto = new MailDTO(email, emailSubjectName, emailBody);
-
+				
+				MailDTO mailDto=TO(email,visitDTO);
 				mailService.sendMail(mailDto);
 				logger.info("mail sent successfully");
 				return visitDTO;
@@ -187,4 +165,28 @@ public class PeronalAndVisitServiceImpl implements PersonalAndVisitService {
 	
 	}
 
+	
+	private MailDTO initMailDTO(String email,VisitDTO visitDTO)
+	{
+		
+		//TODO update to string buffer
+		String emailBody = new String("Thank You for Temple Registration and Check the Details Below");
+				String emailSubjectName = new String("Hi," + "\n"
+						+ "Successfully Registered for the Temple Visitation" + "\n" 
+						+ "\n" + "Number of the Visiter : " + visitDTO.getNoOfPersonList() + "\n"
+						+ "Id card of the Visiter : " + visitDTO.getIdList() + "\n"
+						+ "Id Number of the Visiter : " + visitDTO.getIdNo() + "\n"
+						+ "Pooja Type of the Visiter : " + visitDTO.getPoojaTypeList() + "\n"
+						+ "Special Entry of the Visiter : " + visitDTO.getSpecialEntryList() + "\n"
+						+ "Date of Visiting : " + visitDTO.getDate()+"\n"
+						+ "Regards," + "\n"+"Nikhil."  
+
+				);
+		
+		return new MailDTO(email, emailSubjectName, emailBody);
+		
+
+		
+	}
+	
 }
